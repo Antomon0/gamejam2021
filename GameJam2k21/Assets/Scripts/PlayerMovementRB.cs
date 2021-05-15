@@ -21,6 +21,8 @@ public class PlayerMovementRB : MonoBehaviour
 
     PanelBehaviour currentPanel = null;
 
+    public float lvlSpeedMultiplier = 1f;
+
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
@@ -97,7 +99,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
-        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
+        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed * lvlSpeedMultiplier);
     }
 
     void PanelCheck()
@@ -121,23 +123,25 @@ public class PlayerMovementRB : MonoBehaviour
         /// Left raycast
         if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
         {
-            if (Input.GetKeyDown("e")) {
+            if (Input.GetKeyDown("e"))
+            {
                 Vector3 between = Vector3.Normalize(hit.point - transform.position);
                 print(between);
                 Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+                Instantiate(tagPrefab, new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
             }
         }
         /// Right raycast
         else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
         {
-            if (Input.GetKeyDown("e")) {
+            if (Input.GetKeyDown("e"))
+            {
                 Vector3 between = Vector3.Normalize(hit.point - transform.position);
                 print(between);
                 Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+                Instantiate(tagPrefab, new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
             }
-                
+
         }
 
         /// Prints ray in debug 

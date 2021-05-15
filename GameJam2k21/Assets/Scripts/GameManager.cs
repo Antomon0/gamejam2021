@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
-    float roundSeconds = 5;
+    float roundSeconds = 120;
     int roundNumber = 0;
     int nbPanelsToTag = 3;
 
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            nextRound();
+            Debug.Log("big sadge");
         }
     }
 
@@ -69,7 +69,11 @@ public class GameManager : MonoBehaviour
     {
         print(panelName);
         nbPanelTagged++;
-        print(nbPanelTagged);
+        updateObjectiveText();
+        if (nbPanelTagged == nbPanelsToTag)
+        {
+            nextRound();
+        }
     }
 
     private bool roundInProgress()

@@ -32,8 +32,6 @@ public class PlayerMovementRB : MonoBehaviour
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
-        float turnFactor = isGrounded ? 1f : 1f * turnMidAirMultiplier;
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * Time.deltaTime * turnSpeed * turnFactor, 0f));
         Debug.DrawRay(ui.transform.position, Vector3.down * 1.5f, Color.green, 5);
         // if (Input.GetAxis("Horizontal") < 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
         //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
@@ -65,8 +63,20 @@ public class PlayerMovementRB : MonoBehaviour
     {
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
+
+        float turnFactor = isGrounded ? 1f : 1f * turnMidAirMultiplier;
+
+        Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor, 0f));
+        Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            slopeRotation * cameraRotation,
+            5 * Time.deltaTime
+        );
+
+
         float forwardMvt = 0;
-        // forwardMvt = Input.GetAxis("Vertical");
         if (isGrounded)
         {
             if (RigidPlayerRb.drag == 0)

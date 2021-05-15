@@ -848,7 +848,22 @@ PrefabInstance:
     - target: {fileID: 6067176088249268739, guid: 66a8ce8cd30301345868cd2348113eac,
         type: 3}
       propertyPath: speed
-      value: 1000
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067176088249268739, guid: 66a8ce8cd30301345868cd2348113eac,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067176088249268739, guid: 66a8ce8cd30301345868cd2348113eac,
+        type: 3}
+      propertyPath: maxPlayerAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067176088249268739, guid: 66a8ce8cd30301345868cd2348113eac,
+        type: 3}
+      propertyPath: turnMidAirMultiplier
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6067176088249268798, guid: 66a8ce8cd30301345868cd2348113eac,
         type: 3}

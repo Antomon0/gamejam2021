@@ -20,6 +20,11 @@ public class PlayerMovementRB : MonoBehaviour
     float currentInclination = 0f;
 
     PanelBehaviour currentPanel = null;
+
+    public float lvlSpeedMultiplier = 1f;
+    public float lvlTurnMultiplier = 1f;
+
+    bool canTilt = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,19 +43,6 @@ public class PlayerMovementRB : MonoBehaviour
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
         Debug.DrawRay(ui.transform.position, Vector3.down * 0.75f, Color.green, 5);
-        // if (Input.GetAxis("Horizontal") < 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
-        //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
-        // else if (Input.GetAxis("Horizontal") > 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
-        //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f * -1);
-        // else if (Input.GetAxis("Horizontal") == 0 && ui.transform.rotation.eulerAngles.z != 0)
-        // {
-        //     if (ui.transform.rotation.eulerAngles.z < 0)
-        //         ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
-        //     else
-        //         ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, -45f);
-
-        //     ui.transform.rotation = Quaternion.Euler(0, ui.transform.rotation.eulerAngles.y, 0);
-        // }
 
         if (mvtVelocity.magnitude > maxSpeed)
         {
@@ -67,12 +59,13 @@ public class PlayerMovementRB : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        UpdateCanTilt();
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
 
         float turnFactor = isGrounded ? 1f : 1f * turnMidAirMultiplier;
 
-        Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor, 0f));
+        Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor * lvlTurnMultiplier, 0f));
         Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal);
 
         transform.rotation = Quaternion.Slerp(
@@ -94,7 +87,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
-        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
+        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed * lvlSpeedMultiplier);
     }
 
     void spray(RaycastHit hit) {
@@ -116,28 +109,34 @@ public class PlayerMovementRB : MonoBehaviour
         bool collisionLeft = Physics.Raycast(transform.position, -transform.right, out hitLeft, tagDistance);
         bool collisionRight = Physics.Raycast(transform.position, transform.right, out hitRight, tagDistance);
 
-        if (collisionLeft) {
-            spray(hitLeft);
-        }
+        if (currentPanel == null) {
+            if (collisionLeft) {
+                spray(hitLeft);
+            }
 
-        if (collisionRight) {
-            spray(hitRight);
+            if (collisionRight) {
+                spray(hitRight);
+            }
         }
-
+        else if (getInteractionInput())
+        {
+            currentPanel.Tag();
+        }
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
         Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
-        if (currentPanel != null && Input.GetKeyDown("k"))
-            currentPanel.Tag();
     }
 
     void UpdatePlayerFrontAngle()
     {
-        float forwardMvt = Input.GetAxis("Vertical");
-        float newAngle = forwardMvt * maxPlayerAngle;
-        ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
-        ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
-        currentInclination = newAngle;
+        if (canTilt)
+        {
+            float forwardMvt = Input.GetAxis("Vertical");
+            float newAngle = forwardMvt * maxPlayerAngle;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
     }
 
     public void PanelZoneEntered(PanelBehaviour panel)
@@ -148,5 +147,23 @@ public class PlayerMovementRB : MonoBehaviour
     public void PanelZoneExit()
     {
         currentPanel = null;
+    }
+
+    private bool getInteractionInput()
+    {
+        return Input.GetKeyDown("e");
+    }
+    void UpdateCanTilt()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, 2f, LayerMask.NameToLayer("Player")))
+        {
+            this.canTilt = false;
+            float newAngle = 0;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
+        else
+            this.canTilt = true;
     }
 }

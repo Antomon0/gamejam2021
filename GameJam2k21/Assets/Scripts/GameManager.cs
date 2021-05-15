@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+
+    public int NbOfPanelsToActivate = 5;
+    public float lvlSpeedMultiplier = 1.15f;
+    public float lvlTurnMultiplier = 1.25f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
     float roundSeconds = 120;
     int roundNumber = 0;
-    int nbPanelsToTag = 2;
+    int nbPanelsToTag = 3;
 
     Text[] textPanels;
     Text timerText;
@@ -45,7 +49,9 @@ public class GameManager : MonoBehaviour
             foreach (PanelBehaviour p in panels)
             {
                 p.addListener(TriggerPanel);
+                p.Deactivate();
             }
+            updatePanels();
         }
     }
 
@@ -70,7 +76,6 @@ public class GameManager : MonoBehaviour
         print(panelName);
         nbPanelTagged++;
         updateObjectiveText();
-        updateObjectiveText();
         if (nbPanelTagged == nbPanelsToTag)
         {
             nextRound();
@@ -90,6 +95,8 @@ public class GameManager : MonoBehaviour
         updateRoundText();
         updateObjectiveText();
         updatePanels();
+        GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
+        GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
     }
 
     private void updateRoundText()
@@ -114,7 +121,27 @@ public class GameManager : MonoBehaviour
 
     private void updatePanels()
     {
-        foreach (PanelBehaviour p in panels)
-            p.Activate();
+        resetPanels();
+        List<int> panelsToActivate = new List<int>();
+        for (int i = 0; i < NbOfPanelsToActivate; i++)
+        {
+            panelsToActivate.Add(getPanelIndex(panelsToActivate));
+        }
+        panelsToActivate.ForEach((index) => panels[index].Activate());
+    }
+
+    private int getPanelIndex(List<int> usedIndexes)
+    {
+        int panelIndex = Random.Range(0, panels.Count);
+        while (NbOfPanelsToActivate < panels.Count && usedIndexes.Contains(panelIndex))
+        {
+            panelIndex = Random.Range(0, panels.Count);
+        }
+        return panelIndex;
+    }
+
+    private void resetPanels()
+    {
+        panels.ForEach((p) => p.Deactivate());
     }
 }

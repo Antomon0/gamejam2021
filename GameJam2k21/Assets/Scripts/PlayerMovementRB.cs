@@ -98,7 +98,7 @@ public class PlayerMovementRB : MonoBehaviour
             if (hitRotation.x != 0) {
                 hitRotation = Quaternion.Euler(0, -180, 0);
             }
-            Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+            Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
         }
     }
     void PanelCheck()
@@ -106,8 +106,8 @@ public class PlayerMovementRB : MonoBehaviour
         LayerMask.GetMask("Panel");
         RaycastHit hitLeft;
         RaycastHit hitRight;
-        bool collisionLeft = Physics.Raycast(transform.position, -transform.right, out hitLeft, tagDistance);
-        bool collisionRight = Physics.Raycast(transform.position, transform.right, out hitRight, tagDistance);
+        bool collisionLeft = Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.right, out hitLeft, tagDistance);
+        bool collisionRight = Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.right, out hitRight, tagDistance);
 
         if (currentPanel == null) {
             if (collisionLeft) {
@@ -123,8 +123,8 @@ public class PlayerMovementRB : MonoBehaviour
             currentPanel.Tag();
         }
         /// Prints ray in debug 
-        Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
-        Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
+        Debug.DrawRay(ui.transform.position + new Vector3(0, 1, 0), -transform.right * tagDistance, Color.red, 5);
+        Debug.DrawRay(ui.transform.position + new Vector3(0, 1, 0), transform.right * tagDistance, Color.blue, 5);
     }
 
     void UpdatePlayerFrontAngle()

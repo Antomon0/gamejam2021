@@ -32,8 +32,8 @@ public class PlayerMovementRB : MonoBehaviour
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
         float turnFactor = 1f;
-        if (!isGrounded)
-            turnFactor *= 0.25f;
+        // if (!isGrounded)
+        //     turnFactor *= 0.25f;
         // else
         // {
         //     turnFactor *= mvtVelocity.magnitude / maxSpeed;
@@ -71,11 +71,12 @@ public class PlayerMovementRB : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
 
         float forwardMvt = 0;
+        forwardMvt = Input.GetAxis("Vertical");
         if (isGrounded)
         {
             if (RigidPlayerRb.drag == 0)
                 RigidPlayerRb.drag = DefaultDrag;
-            forwardMvt = Input.GetAxis("Vertical");
+            //forwardMvt = Input.GetAxis("Vertical");
         }
         else
         {

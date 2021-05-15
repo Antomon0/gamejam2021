@@ -21,6 +21,8 @@ public class PlayerMovementRB : MonoBehaviour
 
     PanelBehaviour currentPanel = null;
 
+    public float lvlSpeedMultiplier = 1f;
+
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
@@ -40,19 +42,6 @@ public class PlayerMovementRB : MonoBehaviour
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
         Debug.DrawRay(ui.transform.position, Vector3.down * 0.75f, Color.green, 5);
-        // if (Input.GetAxis("Horizontal") < 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
-        //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
-        // else if (Input.GetAxis("Horizontal") > 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
-        //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f * -1);
-        // else if (Input.GetAxis("Horizontal") == 0 && ui.transform.rotation.eulerAngles.z != 0)
-        // {
-        //     if (ui.transform.rotation.eulerAngles.z < 0)
-        //         ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
-        //     else
-        //         ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, -45f);
-
-        //     ui.transform.rotation = Quaternion.Euler(0, ui.transform.rotation.eulerAngles.y, 0);
-        // }
 
         if (mvtVelocity.magnitude > maxSpeed)
         {
@@ -97,7 +86,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
-        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
+        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed * lvlSpeedMultiplier);
     }
 
     void PanelCheck()
@@ -105,46 +94,39 @@ public class PlayerMovementRB : MonoBehaviour
         LayerMask.GetMask("Panel");
         RaycastHit hit;
 
-        /// Left raycast
-        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
+        if (currentPanel == null)
         {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
-        }
-        /// Right raycast
-        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
-        {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
-        }
+            /// Left raycast
+            if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
+            {
+                if (getInteractionInput())
+                {
+                    Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                    print(between);
+                    Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                    Instantiate(tagPrefab, new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+                }
+            }
+            /// Right raycast
+            else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
+            {
+                if (getInteractionInput())
+                {
+                    Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                    print(between);
+                    Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                    Instantiate(tagPrefab, new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+                }
 
-        /// Left raycast
-        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
-        {
-            if (Input.GetKeyDown("e")) {
-                Vector3 between = Vector3.Normalize(hit.point - transform.position);
-                print(between);
-                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
             }
         }
-        /// Right raycast
-        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
+        else if (getInteractionInput())
         {
-            if (Input.GetKeyDown("e")) {
-                Vector3 between = Vector3.Normalize(hit.point - transform.position);
-                print(between);
-                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
-            }
-                
+            currentPanel.Tag();
         }
-
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
         Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
-        if (currentPanel != null && Input.GetKeyDown("k"))
-            currentPanel.Tag();
     }
 
     void UpdatePlayerFrontAngle()
@@ -169,6 +151,10 @@ public class PlayerMovementRB : MonoBehaviour
         currentPanel = null;
     }
 
+    private bool getInteractionInput()
+    {
+        return Input.GetKeyDown("e");
+    }
     void UpdateCanTilt()
     {
         if (Physics.Raycast(transform.position, transform.forward, 2f, LayerMask.NameToLayer("Player")))

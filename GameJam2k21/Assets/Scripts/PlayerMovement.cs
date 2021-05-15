@@ -30,30 +30,35 @@ public class PlayerMovement : MonoBehaviour
         {
             // We are grounded, so recalculate move direction based on axes
             Vector3 forward = transform.TransformDirection(Vector3.forward);
+            forward.y = 0;
             Vector3 right = transform.TransformDirection(Vector3.right);
+            right.y = 0;
             float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
             float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
             moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-
+            moveDirection.y = 0;
             if (Input.GetButton("Jump") && canMove)
             {
                 moveDirection.y = jumpSpeed;
             }
+            Debug.Log("yih");
+            Debug.Log(moveDirection);
         }
         else
         {
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
+            Vector3 up = transform.TransformDirection(Vector3.up);
             float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
             float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
             float curY = moveDirection.y;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY) + (Vector3.up * curY);
+            moveDirection = (forward * curSpeedX) + (right * curSpeedY) + (up * curY);
+            // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
+            // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
+            // as an acceleration (ms^-2)
+            moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
-        // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
-        // as an acceleration (ms^-2)
-        moveDirection.y -= gravity * Time.deltaTime;
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);

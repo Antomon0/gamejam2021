@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
     public int NbOfPanelsToActivate = 5;
+    public float lvlSpeedMultiplier = 1.15f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
     float roundSeconds = 120;
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
         updateRoundText();
         updateObjectiveText();
         updatePanels();
+        GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
     }
 
     private void updateRoundText()

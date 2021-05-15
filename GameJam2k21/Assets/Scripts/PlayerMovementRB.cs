@@ -21,6 +21,8 @@ public class PlayerMovementRB : MonoBehaviour
 
     PanelBehaviour currentPanel = null;
 
+    public float lvlSpeedMultiplier = 1f;
+
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
@@ -84,7 +86,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
-        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
+        RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed * lvlSpeedMultiplier);
     }
 
     void PanelCheck()

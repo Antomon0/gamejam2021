@@ -539,10 +539,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRB
       objectReference: {fileID: 0}
+    - target: {fileID: 6067176088249268739, guid: 66a8ce8cd30301345868cd2348113eac,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6067176088249268798, guid: 66a8ce8cd30301345868cd2348113eac,
         type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067176088249268798, guid: 66a8ce8cd30301345868cd2348113eac,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6067176088249268798, guid: 66a8ce8cd30301345868cd2348113eac,
         type: 3}

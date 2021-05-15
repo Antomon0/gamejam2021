@@ -201,7 +201,7 @@ MonoBehaviour:
   turnMidAirMultiplier: 0.8
   speed: 2000
   maxSpeed: 800
-  turnSpeed: 85
+  turnSpeed: 50
 --- !u!1 &6067176088574631344
 GameObject:
   m_ObjectHideFlags: 0

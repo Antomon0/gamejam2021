@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementRB : MonoBehaviour
@@ -8,19 +6,22 @@ public class PlayerMovementRB : MonoBehaviour
     public float speed = 1500f;
     public float maxSpeed = 800f;
     public float turnSpeed = 100f;
-
+    public float jumpForce = 10000;
     public float tagDistance = 2f;
-
-    public float maxPlayerAngle = 45f;
+    public GameObject tagPrefab;
+    public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
 
     GameObject ui;
-
     float DefaultDrag;
 
     float currentInclination = 0f;
+
+    PanelBehaviour currentPanel = null;
+
+    bool canTilt = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class PlayerMovementRB : MonoBehaviour
     {
         Vector2 mvtVelocity = new Vector2(RigidPlayerRb.velocity.x, RigidPlayerRb.velocity.y);
         if (Input.GetKeyDown("space") && isGrounded)
-            RigidPlayerRb.AddForce(Vector3.up * 16000f);
+            RigidPlayerRb.AddForce(Vector3.up * jumpForce);
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
@@ -68,6 +69,7 @@ public class PlayerMovementRB : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        UpdateCanTilt();
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
 
@@ -81,7 +83,6 @@ public class PlayerMovementRB : MonoBehaviour
             slopeRotation * cameraRotation,
             5 * Time.deltaTime
         );
-
 
         float forwardMvt = 0;
         if (isGrounded)
@@ -117,17 +118,68 @@ public class PlayerMovementRB : MonoBehaviour
                 hit.collider.GetComponent<PanelBehaviour>().Tag();
         }
 
+        /// Left raycast
+        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
+        {
+            if (Input.GetKeyDown("e")) {
+                Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                print(between);
+                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+            }
+        }
+        /// Right raycast
+        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
+        {
+            if (Input.GetKeyDown("e")) {
+                Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                print(between);
+                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+            }
+                
+        }
+
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
         Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
+        if (currentPanel != null && Input.GetKeyDown("k"))
+            currentPanel.Tag();
     }
 
     void UpdatePlayerFrontAngle()
     {
-        float forwardMvt = Input.GetAxis("Vertical");
-        float newAngle = forwardMvt * maxPlayerAngle;
-        ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
-        ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
-        currentInclination = newAngle;
+        if (canTilt)
+        {
+            float forwardMvt = Input.GetAxis("Vertical");
+            float newAngle = forwardMvt * maxPlayerAngle;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
+    }
+
+    public void PanelZoneEntered(PanelBehaviour panel)
+    {
+        currentPanel = panel;
+    }
+
+    public void PanelZoneExit()
+    {
+        currentPanel = null;
+    }
+
+    void UpdateCanTilt()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, 2f, LayerMask.NameToLayer("Player")))
+        {
+            this.canTilt = false;
+            float newAngle = 0;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
+        else
+            this.canTilt = true;
     }
 }

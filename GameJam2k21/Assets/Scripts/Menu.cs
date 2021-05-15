@@ -9,7 +9,8 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // FindObjectOfType<AudioManager>().Play("MenuSoundtrack");
+        AudioSource bgMusic = FindObjectOfType<AudioSource>();
+        DontDestroyOnLoad(bgMusic.gameObject);
         foreach (var btn in FindObjectOfType<Canvas>().GetComponentsInChildren<Button>())
         {
             if (btn.name.Contains("Play"))
@@ -25,7 +26,6 @@ public class Menu : MonoBehaviour
 
     void Play()
     {
-        // FindObjectOfType<AudioManager>().Stop("MenuSoundtrack");
         SceneManager.LoadScene("Main_Level", LoadSceneMode.Single);
     }
 

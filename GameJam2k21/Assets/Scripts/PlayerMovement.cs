@@ -4,7 +4,13 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 7.5f;
+
+    public float maxSpeed = 8f;
+    public float timeZeroToMax = 2.5f;
+
+    public float forwardVelocity = 0f;
+    public float rightVelocity = 0f;
+    float accelRate;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Transform playerCameraParent;
@@ -21,38 +27,63 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        accelRate = maxSpeed / timeZeroToMax;
         rotation.y = transform.eulerAngles.y;
     }
 
     void Update()
     {
+        // We are grounded, so recalculate move direction based on axes
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        forward.y = 0;
+        Vector3 right = transform.TransformDirection(Vector3.right);
+        right.y = 0;
+
+        float verticalAxis = Input.GetAxis("Vertical");
+        if (verticalAxis != 0)
+        {
+            forwardVelocity += accelRate * verticalAxis * Time.deltaTime;
+            forwardVelocity = forwardVelocity >= 0
+                ? Mathf.Min(forwardVelocity, maxSpeed)
+                : Mathf.Max(forwardVelocity, -maxSpeed);
+        }
+        else
+        {
+            forwardVelocity = forwardVelocity > 0
+            ? forwardVelocity - (accelRate * Time.deltaTime)
+            : forwardVelocity + (accelRate * Time.deltaTime);
+        }
+
+        float horizontalAxis = Input.GetAxis("Horizontal");
+
+        // rotation.y += horizontalAxis * lookSpeed;
+
+        if (horizontalAxis != 0)
+        {
+            rightVelocity += accelRate * horizontalAxis * Time.deltaTime;
+            rightVelocity = rightVelocity > 0
+                ? Mathf.Min(rightVelocity, maxSpeed)
+                : Mathf.Max(rightVelocity, -maxSpeed);
+        }
+        else
+        {
+            rightVelocity = rightVelocity > 0
+            ? rightVelocity - (accelRate * Time.deltaTime)
+            : rightVelocity + (accelRate * Time.deltaTime);
+        }
+
         if (characterController.isGrounded)
         {
-            // We are grounded, so recalculate move direction based on axes
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
-            forward.y = 0;
-            Vector3 right = transform.TransformDirection(Vector3.right);
-            right.y = 0;
-            float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
-            float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+            moveDirection = (forward * forwardVelocity) + (right * rightVelocity);
             moveDirection.y = 0;
+
             if (Input.GetButton("Jump") && canMove)
             {
                 moveDirection.y = jumpSpeed;
             }
-            Debug.Log("yih");
-            Debug.Log(moveDirection);
         }
         else
         {
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
-            Vector3 up = transform.TransformDirection(Vector3.up);
-            float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
-            float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
-            float curY = moveDirection.y;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY) + (up * curY);
             // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
             // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
             // as an acceleration (ms^-2)

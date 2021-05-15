@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
+    int nbPanelTagged = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,5 +29,7 @@ public class GameManager : MonoBehaviour
     void TriggerPanel(string panelName)
     {
         print(panelName);
+        nbPanelTagged++;
+        print(nbPanelTagged);
     }
 }

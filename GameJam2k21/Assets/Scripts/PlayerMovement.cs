@@ -5,12 +5,15 @@
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float maxSpeed = 8f;
-    public float timeZeroToMax = 2.5f;
+    public float maxForwardSpeed = 8f;
+
+    public float maxRightSpeed = 4f;
+    public float timeZeroToMax = 0.5f;
 
     public float forwardVelocity = 0f;
     public float rightVelocity = 0f;
-    float accelRate;
+    float accelRateForward;
+    float accelRateRight;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Transform playerCameraParent;
@@ -27,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        accelRate = maxSpeed / timeZeroToMax;
+        accelRateForward = maxForwardSpeed / timeZeroToMax;
+        accelRateRight = maxRightSpeed / timeZeroToMax;
         rotation.y = transform.eulerAngles.y;
     }
 
@@ -35,23 +39,23 @@ public class PlayerMovement : MonoBehaviour
     {
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
-        forward.y = 0;
+        // forward.y = 0;
         Vector3 right = transform.TransformDirection(Vector3.right);
-        right.y = 0;
+        // right.y = 0;
 
         float verticalAxis = Input.GetAxis("Vertical");
         if (verticalAxis != 0)
         {
-            forwardVelocity += accelRate * verticalAxis * Time.deltaTime;
+            forwardVelocity += accelRateForward * verticalAxis * Time.deltaTime;
             forwardVelocity = forwardVelocity >= 0
-                ? Mathf.Min(forwardVelocity, maxSpeed)
-                : Mathf.Max(forwardVelocity, -maxSpeed);
+                ? Mathf.Min(forwardVelocity, maxForwardSpeed)
+                : Mathf.Max(forwardVelocity, -maxForwardSpeed);
         }
         else
         {
             forwardVelocity = forwardVelocity > 0
-            ? forwardVelocity - (accelRate * Time.deltaTime)
-            : forwardVelocity + (accelRate * Time.deltaTime);
+            ? forwardVelocity - (accelRateForward * Time.deltaTime)
+            : forwardVelocity + (accelRateForward * Time.deltaTime);
         }
 
         float horizontalAxis = Input.GetAxis("Horizontal");
@@ -60,16 +64,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizontalAxis != 0)
         {
-            rightVelocity += accelRate * horizontalAxis * Time.deltaTime;
+            rightVelocity += accelRateRight * horizontalAxis * Time.deltaTime;
             rightVelocity = rightVelocity > 0
-                ? Mathf.Min(rightVelocity, maxSpeed)
-                : Mathf.Max(rightVelocity, -maxSpeed);
+                ? Mathf.Min(rightVelocity, maxRightSpeed)
+                : Mathf.Max(rightVelocity, -maxRightSpeed);
         }
         else
         {
             rightVelocity = rightVelocity > 0
-            ? rightVelocity - (accelRate * Time.deltaTime)
-            : rightVelocity + (accelRate * Time.deltaTime);
+            ? rightVelocity - (accelRateRight * Time.deltaTime)
+            : rightVelocity + (accelRateRight * Time.deltaTime);
         }
 
         if (characterController.isGrounded)

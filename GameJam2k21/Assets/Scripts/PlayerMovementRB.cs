@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMovementRB : MonoBehaviour
 {
-    const float speed = 1500f;
-
-    const float turnSpeed = 100f;
-    const float maxSpeed = 600f;
+    public float turnMidAirMultiplier = 0.5f;
+    public float speed = 1500f;
+    public float maxSpeed = 800f;
+    public float turnSpeed = 100f;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
@@ -31,14 +31,9 @@ public class PlayerMovementRB : MonoBehaviour
             RigidPlayerRb.AddForce(Vector3.up * 16000f);
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
-        float turnFactor = 1f;
-        // if (!isGrounded)
-        //     turnFactor *= 0.25f;
-        // else
-        // {
-        //     turnFactor *= mvtVelocity.magnitude / maxSpeed;
-        // }
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * Time.deltaTime * 100f * turnFactor, 0f));
+
+        float turnFactor = isGrounded ? 1f : 1f * turnMidAirMultiplier;
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * Time.deltaTime * turnSpeed * turnFactor, 0f));
         Debug.DrawRay(ui.transform.position, Vector3.down * 1.5f, Color.green, 5);
         // if (Input.GetAxis("Horizontal") < 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
         //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
@@ -69,14 +64,13 @@ public class PlayerMovementRB : MonoBehaviour
     {
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
-
         float forwardMvt = 0;
-        forwardMvt = Input.GetAxis("Vertical");
+        // forwardMvt = Input.GetAxis("Vertical");
         if (isGrounded)
         {
             if (RigidPlayerRb.drag == 0)
                 RigidPlayerRb.drag = DefaultDrag;
-            //forwardMvt = Input.GetAxis("Vertical");
+            forwardMvt = Input.GetAxis("Vertical");
         }
         else
         {
@@ -84,8 +78,6 @@ public class PlayerMovementRB : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
-        float sideMvt = Input.GetAxis("Horizontal");
-
         RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
     }
 }

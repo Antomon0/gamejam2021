@@ -12,6 +12,8 @@ public class PlayerMovementRB : MonoBehaviour
     public float tagDistance = 2f;
 
     public float maxPlayerAngle = 45f;
+
+    public GameObject tagPrefab;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
@@ -115,6 +117,28 @@ public class PlayerMovementRB : MonoBehaviour
         {
             if (Input.GetKeyDown("k"))
                 hit.collider.GetComponent<PanelBehaviour>().Tag();
+        }
+
+        /// Left raycast
+        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
+        {
+            if (Input.GetKeyDown("e")) {
+                Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                print(between);
+                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+            }
+        }
+        /// Right raycast
+        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
+        {
+            if (Input.GetKeyDown("e")) {
+                Vector3 between = Vector3.Normalize(hit.point - transform.position);
+                print(between);
+                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+            }
+                
         }
 
         /// Prints ray in debug 

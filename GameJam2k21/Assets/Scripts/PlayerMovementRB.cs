@@ -19,6 +19,8 @@ public class PlayerMovementRB : MonoBehaviour
     float currentInclination = 0f;
 
     PanelBehaviour currentPanel = null;
+
+    bool canTilt = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +68,7 @@ public class PlayerMovementRB : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        UpdateCanTilt();
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, LayerMask.NameToLayer("Player"));
 
@@ -121,11 +124,14 @@ public class PlayerMovementRB : MonoBehaviour
 
     void UpdatePlayerFrontAngle()
     {
-        float forwardMvt = Input.GetAxis("Vertical");
-        float newAngle = forwardMvt * maxPlayerAngle;
-        ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
-        ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
-        currentInclination = newAngle;
+        if (canTilt)
+        {
+            float forwardMvt = Input.GetAxis("Vertical");
+            float newAngle = forwardMvt * maxPlayerAngle;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
     }
 
     public void PanelZoneEntered(PanelBehaviour panel)
@@ -136,5 +142,19 @@ public class PlayerMovementRB : MonoBehaviour
     public void PanelZoneExit()
     {
         currentPanel = null;
+    }
+
+    void UpdateCanTilt()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, 2f, LayerMask.NameToLayer("Player")))
+        {
+            this.canTilt = false;
+            float newAngle = 0;
+            ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+            ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+            currentInclination = newAngle;
+        }
+        else
+            this.canTilt = true;
     }
 }

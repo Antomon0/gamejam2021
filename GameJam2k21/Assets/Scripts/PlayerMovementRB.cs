@@ -17,6 +17,8 @@ public class PlayerMovementRB : MonoBehaviour
     float DefaultDrag;
 
     float currentInclination = 0f;
+
+    PanelBehaviour currentPanel = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -99,22 +101,22 @@ public class PlayerMovementRB : MonoBehaviour
         LayerMask.GetMask("Panel");
         RaycastHit hit;
 
-        /// Left raycast
-        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
-        {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
-        }
-        /// Right raycast
-        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
-        {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
-        }
-
+        // /// Left raycast
+        // if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
+        // {
+        //     if (Input.GetKeyDown("k"))
+        //         hit.collider.GetComponent<PanelBehaviour>().Tag();
+        // }
+        // /// Right raycast
+        // else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
+        // {
+        //     if (Input.GetKeyDown("k"))
+        //         hit.collider.GetComponent<PanelBehaviour>().Tag();
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
         Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
+        if (currentPanel != null && Input.GetKeyDown("k"))
+            currentPanel.Tag();
     }
 
     void UpdatePlayerFrontAngle()
@@ -124,5 +126,15 @@ public class PlayerMovementRB : MonoBehaviour
         ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
         ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
         currentInclination = newAngle;
+    }
+
+    public void PanelZoneEntered(PanelBehaviour panel)
+    {
+        currentPanel = panel;
+    }
+
+    public void PanelZoneExit()
+    {
+        currentPanel = null;
     }
 }

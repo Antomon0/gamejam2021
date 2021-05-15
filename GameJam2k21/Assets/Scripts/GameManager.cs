@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
 
     public int NbOfPanelsToActivate = 5;
-    public float lvlSpeedMultiplier = 1.15f;
-    public float lvlTurnMultiplier = 1.25f;
+    public float lvlSpeedMultiplier = 1.10f;
+    public float lvlTurnMultiplier = 1f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
     float roundSeconds = 120;
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         updateObjectiveText();
         updatePanels();
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
-        GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
+        // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
     }
 
     private void updateRoundText()

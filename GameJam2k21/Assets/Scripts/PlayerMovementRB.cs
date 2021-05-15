@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementRB : MonoBehaviour
@@ -8,21 +6,20 @@ public class PlayerMovementRB : MonoBehaviour
     public float speed = 1500f;
     public float maxSpeed = 800f;
     public float turnSpeed = 100f;
-
+    public float jumpForce = 10000;
     public float tagDistance = 2f;
-
-    public float maxPlayerAngle = 45f;
-
     public GameObject tagPrefab;
+    public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
 
     GameObject ui;
-
     float DefaultDrag;
 
     float currentInclination = 0f;
+
+    PanelBehaviour currentPanel = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +33,7 @@ public class PlayerMovementRB : MonoBehaviour
     {
         Vector2 mvtVelocity = new Vector2(RigidPlayerRb.velocity.x, RigidPlayerRb.velocity.y);
         if (Input.GetKeyDown("space") && isGrounded)
-            RigidPlayerRb.AddForce(Vector3.up * 16000f);
+            RigidPlayerRb.AddForce(Vector3.up * jumpForce);
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
@@ -83,7 +80,6 @@ public class PlayerMovementRB : MonoBehaviour
             slopeRotation * cameraRotation,
             5 * Time.deltaTime
         );
-
 
         float forwardMvt = 0;
         if (isGrounded)
@@ -144,6 +140,8 @@ public class PlayerMovementRB : MonoBehaviour
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
         Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
+        if (currentPanel != null && Input.GetKeyDown("k"))
+            currentPanel.Tag();
     }
 
     void UpdatePlayerFrontAngle()
@@ -153,5 +151,15 @@ public class PlayerMovementRB : MonoBehaviour
         ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
         ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
         currentInclination = newAngle;
+    }
+
+    public void PanelZoneEntered(PanelBehaviour panel)
+    {
+        currentPanel = panel;
+    }
+
+    public void PanelZoneExit()
+    {
+        currentPanel = null;
     }
 }

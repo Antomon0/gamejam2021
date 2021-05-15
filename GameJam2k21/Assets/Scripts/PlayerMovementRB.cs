@@ -97,44 +97,31 @@ public class PlayerMovementRB : MonoBehaviour
         RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
     }
 
+    void spray(RaycastHit hit) {
+        if (Input.GetKeyDown("e")) {
+            Vector3 between = Vector3.Normalize(hit.point - transform.position);
+            print(between);
+            Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
+            if (hitRotation.x != 0) {
+                hitRotation = Quaternion.Euler(0, -180, 0);
+            }
+            Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
+        }
+    }
     void PanelCheck()
     {
         LayerMask.GetMask("Panel");
-        RaycastHit hit;
+        RaycastHit hitLeft;
+        RaycastHit hitRight;
+        bool collisionLeft = Physics.Raycast(transform.position, -transform.right, out hitLeft, tagDistance);
+        bool collisionRight = Physics.Raycast(transform.position, transform.right, out hitRight, tagDistance);
 
-        /// Left raycast
-        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
-        {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
-        }
-        /// Right raycast
-        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
-        {
-            if (Input.GetKeyDown("k"))
-                hit.collider.GetComponent<PanelBehaviour>().Tag();
+        if (collisionLeft) {
+            spray(hitLeft);
         }
 
-        /// Left raycast
-        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance))
-        {
-            if (Input.GetKeyDown("e")) {
-                Vector3 between = Vector3.Normalize(hit.point - transform.position);
-                print(between);
-                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
-            }
-        }
-        /// Right raycast
-        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance))
-        {
-            if (Input.GetKeyDown("e")) {
-                Vector3 between = Vector3.Normalize(hit.point - transform.position);
-                print(between);
-                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-                Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x, hit.point.y - between.y, hit.point.z - between.z), hitRotation);
-            }
-                
+        if (collisionRight) {
+            spray(hitRight);
         }
 
         /// Prints ray in debug 

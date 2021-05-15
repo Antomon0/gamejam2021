@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PanelBehaviour : MonoBehaviour
 {
+    bool isTagged = false;
     public class PanelEvent : UnityEvent<string>
     {
 
@@ -19,11 +20,20 @@ public class PanelBehaviour : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown("k"))
-            taggedEvent.Invoke(gameObject.name);
+            Tag();
     }
 
     public void addListener(UnityAction<string> listener)
     {
         taggedEvent.AddListener(listener);
+    }
+
+    public void Tag()
+    {
+        if (!isTagged)
+        {
+            isTagged = true;
+            taggedEvent.Invoke(gameObject.name);
+        }
     }
 }

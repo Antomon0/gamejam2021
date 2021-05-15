@@ -55,6 +55,7 @@ public class PlayerMovementRB : MonoBehaviour
         {
             RigidPlayerRb.velocity += Physics.gravity * Time.deltaTime;
         }
+        PanelCheck();
     }
 
     // Update is called once per frame
@@ -89,5 +90,21 @@ public class PlayerMovementRB : MonoBehaviour
 
         //Debug.DrawRay(transform.position, 1.5f * Vector3.down, Color.green, 5);
         RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed);
+    }
+
+    void PanelCheck()
+    {
+        LayerMask.GetMask("Panel");
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -transform.right, out hit, 2f, LayerMask.GetMask("Panel")))
+        {
+            print("hit left");
+        }
+        else if (Physics.Raycast(transform.position, transform.right, out hit, 2f, LayerMask.GetMask("Panel")))
+        {
+            print("print right");
+        }
+        Debug.DrawRay(ui.transform.position, -transform.right * 2f, Color.red, 5);
+        Debug.DrawRay(ui.transform.position, transform.right * 2f, Color.blue, 5);
     }
 }

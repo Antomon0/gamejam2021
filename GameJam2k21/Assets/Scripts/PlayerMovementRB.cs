@@ -68,6 +68,7 @@ public class PlayerMovementRB : MonoBehaviour
         Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor * lvlTurnMultiplier, 0f));
         Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal);
 
+        RigidPlayerRb.rotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 90);
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             slopeRotation * cameraRotation,
@@ -90,15 +91,18 @@ public class PlayerMovementRB : MonoBehaviour
         RigidPlayerRb.AddForce(transform.forward * forwardMvt * speed * lvlSpeedMultiplier);
     }
 
-    void spray(RaycastHit hit) {
-        if (Input.GetKeyDown("e")) {
+    void spray(RaycastHit hit)
+    {
+        if (Input.GetKeyDown("e"))
+        {
             Vector3 between = Vector3.Normalize(hit.point - transform.position);
             print(between);
             Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-            if (hitRotation.x != 0) {
+            if (hitRotation.x != 0)
+            {
                 hitRotation = Quaternion.Euler(0, -180, 0);
             }
-            Instantiate(tagPrefab,  new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
+            Instantiate(tagPrefab, new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
         }
     }
     void PanelCheck()
@@ -109,12 +113,15 @@ public class PlayerMovementRB : MonoBehaviour
         bool collisionLeft = Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.right, out hitLeft, tagDistance);
         bool collisionRight = Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.right, out hitRight, tagDistance);
 
-        if (currentPanel == null) {
-            if (collisionLeft) {
+        if (currentPanel == null)
+        {
+            if (collisionLeft)
+            {
                 spray(hitLeft);
             }
 
-            if (collisionRight) {
+            if (collisionRight)
+            {
                 spray(hitRight);
             }
         }

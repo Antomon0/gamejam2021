@@ -31,7 +31,32 @@ public class PanelBehaviour : MonoBehaviour
         if (!isTagged)
         {
             isTagged = true;
+            transform.parent.gameObject.SetActive(false);
             taggedEvent.Invoke(gameObject.name);
+            GameObject.FindObjectOfType<PlayerMovementRB>().PanelZoneExit();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.gameObject.name);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GameObject.FindObjectOfType<PlayerMovementRB>().PanelZoneEntered(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GameObject.FindObjectOfType<PlayerMovementRB>().PanelZoneExit();
+        }
+    }
+
+    public void Activate()
+    {
+        transform.parent.gameObject.SetActive(true);
+        isTagged = false;
     }
 }

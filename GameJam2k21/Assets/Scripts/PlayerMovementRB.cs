@@ -8,6 +8,10 @@ public class PlayerMovementRB : MonoBehaviour
     public float speed = 1500f;
     public float maxSpeed = 800f;
     public float turnSpeed = 100f;
+
+    public float tagDistance = 2f;
+
+    public float maxPlayerAngle = 45f;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
@@ -15,6 +19,8 @@ public class PlayerMovementRB : MonoBehaviour
     GameObject ui;
 
     float DefaultDrag;
+
+    float currentInclination = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +38,7 @@ public class PlayerMovementRB : MonoBehaviour
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
-        Debug.DrawRay(ui.transform.position, Vector3.down * 1.5f, Color.green, 5);
+        Debug.DrawRay(ui.transform.position, Vector3.down * 0.75f, Color.green, 5);
         // if (Input.GetAxis("Horizontal") < 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
         //     ui.transform.RotateAround(ui.transform.position + Vector3.down, transform.forward, 45f);
         // else if (Input.GetAxis("Horizontal") > 0 && ui.transform.rotation.eulerAngles.x == 0 && ui.transform.rotation.eulerAngles.z == 0)
@@ -55,6 +61,7 @@ public class PlayerMovementRB : MonoBehaviour
         {
             RigidPlayerRb.velocity += Physics.gravity * Time.deltaTime;
         }
+        UpdatePlayerFrontAngle();
         PanelCheck();
     }
 
@@ -96,15 +103,31 @@ public class PlayerMovementRB : MonoBehaviour
     {
         LayerMask.GetMask("Panel");
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.right, out hit, 2f, LayerMask.GetMask("Panel")))
+
+        /// Left raycast
+        if (Physics.Raycast(transform.position, -transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
         {
-            print("hit left");
+            if (Input.GetKeyDown("k"))
+                hit.collider.GetComponent<PanelBehaviour>().Tag();
         }
-        else if (Physics.Raycast(transform.position, transform.right, out hit, 2f, LayerMask.GetMask("Panel")))
+        /// Right raycast
+        else if (Physics.Raycast(transform.position, transform.right, out hit, tagDistance, LayerMask.GetMask("Panel")))
         {
-            print("print right");
+            if (Input.GetKeyDown("k"))
+                hit.collider.GetComponent<PanelBehaviour>().Tag();
         }
-        Debug.DrawRay(ui.transform.position, -transform.right * 2f, Color.red, 5);
-        Debug.DrawRay(ui.transform.position, transform.right * 2f, Color.blue, 5);
+
+        /// Prints ray in debug 
+        Debug.DrawRay(ui.transform.position, -transform.right * tagDistance, Color.red, 5);
+        Debug.DrawRay(ui.transform.position, transform.right * tagDistance, Color.blue, 5);
+    }
+
+    void UpdatePlayerFrontAngle()
+    {
+        float forwardMvt = Input.GetAxis("Vertical");
+        float newAngle = forwardMvt * maxPlayerAngle;
+        ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
+        ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
+        currentInclination = newAngle;
     }
 }

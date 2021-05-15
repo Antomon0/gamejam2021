@@ -19,8 +19,6 @@ public class PanelBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("k"))
-            Tag();
     }
 
     public void addListener(UnityAction<string> listener)

@@ -204,6 +204,8 @@ MonoBehaviour:
   turnSpeed: 30
   jumpForce: 10000
   tagDistance: 2
+  tagPrefab: {fileID: 459028183843143586, guid: a0e90b348e69a764c88007d6bc8b8ea6,
+    type: 3}
   maxPlayerAngle: 45
 --- !u!1 &6067176088574631344
 GameObject:

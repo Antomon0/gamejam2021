@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
         print(panelName);
         nbPanelTagged++;
         updateObjectiveText();
-        updateObjectiveText();
         if (nbPanelTagged == nbPanelsToTag)
         {
             nextRound();

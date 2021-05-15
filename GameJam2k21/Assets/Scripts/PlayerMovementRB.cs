@@ -22,6 +22,7 @@ public class PlayerMovementRB : MonoBehaviour
     PanelBehaviour currentPanel = null;
 
     public float lvlSpeedMultiplier = 1f;
+    public float lvlTurnMultiplier = 1f;
 
     bool canTilt = true;
     // Start is called before the first frame update
@@ -64,7 +65,7 @@ public class PlayerMovementRB : MonoBehaviour
 
         float turnFactor = isGrounded ? 1f : 1f * turnMidAirMultiplier;
 
-        Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor, 0f));
+        Quaternion cameraRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, Input.GetAxis("Horizontal") * turnSpeed * turnFactor * lvlTurnMultiplier, 0f));
         Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal);
 
         transform.rotation = Quaternion.Slerp(

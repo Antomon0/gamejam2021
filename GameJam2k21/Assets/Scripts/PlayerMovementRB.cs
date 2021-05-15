@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementRB : MonoBehaviour
@@ -8,16 +6,14 @@ public class PlayerMovementRB : MonoBehaviour
     public float speed = 1500f;
     public float maxSpeed = 800f;
     public float turnSpeed = 100f;
-
+    public float jumpForce = 10000;
     public float tagDistance = 2f;
-
-    public float maxPlayerAngle = 45f;
+    public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
     bool isGrounded = true;
 
     GameObject ui;
-
     float DefaultDrag;
 
     float currentInclination = 0f;
@@ -34,7 +30,7 @@ public class PlayerMovementRB : MonoBehaviour
     {
         Vector2 mvtVelocity = new Vector2(RigidPlayerRb.velocity.x, RigidPlayerRb.velocity.y);
         if (Input.GetKeyDown("space") && isGrounded)
-            RigidPlayerRb.AddForce(Vector3.up * 16000f);
+            RigidPlayerRb.AddForce(Vector3.up * jumpForce);
 
         transform.position = RigidPlayerRb.transform.position + new Vector3(0f, 0.5f, 0f);
 
@@ -81,7 +77,6 @@ public class PlayerMovementRB : MonoBehaviour
             slopeRotation * cameraRotation,
             5 * Time.deltaTime
         );
-
 
         float forwardMvt = 0;
         if (isGrounded)

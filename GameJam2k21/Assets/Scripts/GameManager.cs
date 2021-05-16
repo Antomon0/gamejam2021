@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     Text timerText;
     Text objectiveText;
     Text roundText;
+    Image nextRoundPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
                 updateRoundText();
             }
         }
+        nextRoundPanel = FindObjectOfType<Image>(true);
+
         panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
         if (panels.Count != 0)
         {
@@ -53,6 +56,7 @@ public class GameManager : MonoBehaviour
             }
             updatePanels();
         }
+        GameObject.FindObjectOfType<AudioManager>().Play("Soundtrack");
     }
 
     // Update is called once per frame
@@ -95,6 +99,7 @@ public class GameManager : MonoBehaviour
         updateRoundText();
         updateObjectiveText();
         updatePanels();
+        nextRoundPanel.gameObject.SetActive(true);
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
         // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
     }

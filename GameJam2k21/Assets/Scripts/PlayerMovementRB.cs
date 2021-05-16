@@ -103,6 +103,7 @@ public class PlayerMovementRB : MonoBehaviour
                 hitRotation = Quaternion.Euler(0, -180, 0);
             }
             Instantiate(tagPrefab, new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
+            GameObject.FindObjectOfType<AudioManager>().Play("Spray");
         }
     }
     void PanelCheck()

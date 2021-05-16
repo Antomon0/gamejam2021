@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: New Material
   m_Shader: {fileID: 4800000, guid: 1d64af84bdc970c4fae0c1e06dd95b73, type: 3}
-  m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _MATERIAL_AFFECTS_ALBEDO _MATERIAL_AFFECTS_MASKMAP
-    _MATERIAL_AFFECTS_NORMAL _NORMALMAP_TANGENT_SPACE
+  m_ShaderKeywords: _COLORMAP _DISABLE_SSR_TRANSPARENT _EMISSIVEMAP _MASKMAP _MATERIAL_AFFECTS_ALBEDO
+    _MATERIAL_AFFECTS_MASKMAP _MATERIAL_AFFECTS_NORMAL _NORMALMAP _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: ce6bdb10d9fd9424196b6253f99d9265, type: 3}
+        m_Texture: {fileID: 2800000, guid: a77d67fc9c6dd1b40b7770cacd0aa962, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveColorMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6bf4bc3c26cfda34b91c93754310207e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
@@ -72,11 +72,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: 07837b3f3245ed24e851906619acf1e8, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4369c7784ef4ff4ab6d2cfa7e373c42, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 3d6091b54ec50324c9cf98fdc8146add, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8359325f436b6954fa1615ad845ff81a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:

@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class PanelBehaviour : MonoBehaviour
 {
     bool isTagged = false;
+    [SerializeField]
+    GameObject[] panels;
     public class PanelEvent : UnityEvent<string>
     {
 
@@ -13,7 +15,6 @@ public class PanelBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -31,7 +32,8 @@ public class PanelBehaviour : MonoBehaviour
         if (!isTagged)
         {
             isTagged = true;
-            Deactivate();
+            panels[0].SetActive(false);
+            panels[1].SetActive(true);
             taggedEvent.Invoke(gameObject.name);
             GameObject.FindObjectOfType<PlayerMovementRB>().PanelZoneExit();
         }

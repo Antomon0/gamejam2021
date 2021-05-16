@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int NbOfPanelsToActivate = 5;
+    [SerializeField]
+    GameObject[] panelPrefabs;
+    public int NbOfPanelsToActivate = 3;
     public float lvlSpeedMultiplier = 1.10f;
     public float lvlTurnMultiplier = 1f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
@@ -65,13 +67,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
+        updatePanelsBehaviourList();
         if (panels.Count != 0)
         {
             foreach (PanelBehaviour p in panels)
             {
                 p.addListener(TriggerPanel);
-                p.Deactivate();
             }
             updatePanels();
         }
@@ -172,17 +173,36 @@ public class GameManager : MonoBehaviour
         {
             panelsToActivate.Add(getPanelIndex(panelsToActivate));
         }
-        panelsToActivate.ForEach((index) => panels[index].Activate());
+        panelsToActivate.ForEach((index) =>
+        {
+            int panelType = Random.Range(0, 3);
+            GameObject currentPanel = panels[index].transform.parent.gameObject;
+            GameObject newPanel = Instantiate(panelPrefabs[panelType], currentPanel.transform.position, currentPanel.transform.rotation);
+            newPanel.transform.parent = currentPanel.transform.parent;
+            newPanel.transform.position = currentPanel.transform.position;
+            newPanel.transform.rotation = currentPanel.transform.rotation;
+            newPanel.transform.SetSiblingIndex(currentPanel.transform.GetSiblingIndex());
+            Destroy(currentPanel);
+            PanelBehaviour newPanelBehaviour = newPanel.GetComponentInChildren<PanelBehaviour>();
+            newPanelBehaviour.addListener(TriggerPanel);
+            newPanelBehaviour.Activate();
+        });
+        updatePanelsBehaviourList();
     }
 
     private int getPanelIndex(List<int> usedIndexes)
     {
         int panelIndex = Random.Range(0, panels.Count);
-        while (NbOfPanelsToActivate < panels.Count && usedIndexes.Contains(panelIndex))
+        while (NbOfPanelsToActivate <= panels.Count && usedIndexes.Contains(panelIndex))
         {
             panelIndex = Random.Range(0, panels.Count);
         }
         return panelIndex;
+    }
+
+    private void updatePanelsBehaviourList()
+    {
+        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>(true));
     }
 
     private void resetPanels()

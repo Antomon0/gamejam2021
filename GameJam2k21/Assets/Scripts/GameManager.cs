@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
+        }
+
         if (panels.Count == 0)
             panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
 

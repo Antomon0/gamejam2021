@@ -43,3 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be74c42c6789594b9f1b67160083b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NbOfPanelsToActivate: 3
+  lvlSpeedMultiplier: 1.1
+  lvlTurnMultiplier: 1
+  nbPanelsToTag: 3
+  roundSeconds: 120

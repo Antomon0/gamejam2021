@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int NbOfPanelsToActivate = 5;
+    public int NbOfPanelsToActivate = 3;
     public float lvlSpeedMultiplier = 1.10f;
     public float lvlTurnMultiplier = 1f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();

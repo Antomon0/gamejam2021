@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     Text roundText;
     Image nextRoundPanel;
     Image endGamePanel;
+    Text endGameScore;
 
     bool gameEnded = false;
 
@@ -58,11 +59,14 @@ public class GameManager : MonoBehaviour
             if (imageName.Contains("next"))
             {
                 nextRoundPanel = current;
+                Debug.Log(nextRoundPanel);
                 nextRoundPanel.gameObject.SetActive(false);
             }
             if (imageName.Contains("end"))
             {
                 endGamePanel = current;
+                endGameScore = GameObject.FindGameObjectWithTag("EndScore").GetComponent<Text>();
+                Debug.Log(endGameScore);
                 endGamePanel.gameObject.SetActive(false);
             }
         }
@@ -118,12 +122,6 @@ public class GameManager : MonoBehaviour
 
     private void nextRound()
     {
-        nbPanelTagged = 0;
-        roundNumber++;
-        roundSeconds += 5;
-        updateRoundText();
-        updateObjectiveText();
-        updatePanels();
         StartCoroutine(nextRoundPanelRoutine());
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
         // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
@@ -138,6 +136,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator endGameRoutine()
     {
         endGamePanel.gameObject.SetActive(true);
+        endGameScore.text = string.Format("Vous avez défendu le français pendant {0} nuit{1}!", roundNumber, roundNumber > 1 ? "s" : "");
         yield return new WaitForSeconds(endGamePanel.GetComponent<Animation>().clip.length);
         yield return new WaitUntil(() => Input.anyKeyDown);
         AsyncOperation promise = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
@@ -145,6 +144,12 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator nextRoundPanelRoutine()
     {
+        nbPanelTagged = 0;
+        roundNumber++;
+        roundSeconds += 5;
+        updateRoundText();
+        updateObjectiveText();
+        updatePanels();
         nextRoundPanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
         nextRoundPanel.gameObject.SetActive(false);
@@ -172,6 +177,7 @@ public class GameManager : MonoBehaviour
 
     private void updatePanels()
     {
+        updatePanelsBehaviourList();
         resetPanels();
         List<int> panelsToActivate = new List<int>();
         for (int i = 0; i < NbOfPanelsToActivate; i++)
@@ -192,7 +198,6 @@ public class GameManager : MonoBehaviour
             newPanelBehaviour.addListener(TriggerPanel);
             newPanelBehaviour.Activate();
         });
-        updatePanelsBehaviourList();
     }
 
     private int getPanelIndex(List<int> usedIndexes)

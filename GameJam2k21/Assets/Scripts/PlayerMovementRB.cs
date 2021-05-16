@@ -7,10 +7,12 @@ public class PlayerMovementRB : MonoBehaviour
     public float maxSpeed = 800f;
     public float turnSpeed = 100f;
     public float jumpForce = 10000;
-    public float tagDistance = 2f;
+    public float tagDistance = 2.5f;
     public GameObject tagPrefab;
     public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
+
+    private Vector3 sprayOffset = new Vector3(0, 2, 0);
 
     bool isGrounded = true;
 
@@ -93,34 +95,23 @@ public class PlayerMovementRB : MonoBehaviour
 
     void spray(RaycastHit hit)
     {
-        if (Input.GetKeyDown("e"))
-        {
-            Vector3 between = Vector3.Normalize(hit.point - transform.position);
-            print(between);
-            Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
-            if (hitRotation.x != 0)
-            {
-                hitRotation = Quaternion.Euler(0, -180, 0);
-            }
-            Instantiate(tagPrefab, new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
-            GameObject.FindObjectOfType<AudioManager>().Play("Spray");
-        }
+        Quaternion hitRotation = Quaternion.LookRotation(-hit.normal);
+        Instantiate(tagPrefab, hit.point + (hit.normal * 0.5f), hitRotation);
+        GameObject.FindObjectOfType<AudioManager>().Play("Spray");
     }
     void PanelCheck()
     {
-        LayerMask.GetMask("Panel");
         RaycastHit hitLeft;
         RaycastHit hitRight;
-        bool collisionLeft = Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.right, out hitLeft, tagDistance);
-        bool collisionRight = Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.right, out hitRight, tagDistance);
+        bool collisionLeft = Physics.Raycast(transform.position + sprayOffset, -transform.right, out hitLeft, tagDistance);
+        bool collisionRight = Physics.Raycast(transform.position + sprayOffset, transform.right, out hitRight, tagDistance);
 
-        if (currentPanel == null)
+        if (currentPanel == null && getInteractionInput())
         {
             if (collisionLeft)
             {
                 spray(hitLeft);
             }
-
             if (collisionRight)
             {
                 spray(hitRight);
@@ -132,8 +123,8 @@ public class PlayerMovementRB : MonoBehaviour
             currentPanel.Tag();
         }
         /// Prints ray in debug 
-        Debug.DrawRay(ui.transform.position + new Vector3(0, 1, 0), -transform.right * tagDistance, Color.red, 5);
-        Debug.DrawRay(ui.transform.position + new Vector3(0, 1, 0), transform.right * tagDistance, Color.blue, 5);
+        Debug.DrawRay(ui.transform.position + sprayOffset, -transform.right * tagDistance, Color.red, 5);
+        Debug.DrawRay(ui.transform.position + sprayOffset, transform.right * tagDistance, Color.blue, 5);
     }
 
     void UpdatePlayerFrontAngle()

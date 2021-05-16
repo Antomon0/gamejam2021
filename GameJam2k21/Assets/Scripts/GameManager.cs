@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     int nbPanelTagged = 0;
     float roundSeconds = 120;
     int roundNumber = 0;
-    int nbPanelsToTag = 3;
+    public int nbPanelsToTag = 3;
 
     Text[] textPanels;
     Text timerText;
@@ -99,9 +99,16 @@ public class GameManager : MonoBehaviour
         updateRoundText();
         updateObjectiveText();
         updatePanels();
+        StartCoroutine(NextRoundPanelRoutine());
         nextRoundPanel.gameObject.SetActive(true);
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
         // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
+    }
+
+    private IEnumerator NextRoundPanelRoutine()
+    {
+        yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
+        nextRoundPanel.gameObject.SetActive(false);
     }
 
     private void updateRoundText()

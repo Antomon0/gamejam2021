@@ -3,7 +3,12 @@ guid: 9d477408256f0984a9b279d7f826ef36
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: checker_map_gravity
+    second: {fileID: 2100000, guid: 76304bcbd4daf044c8e6955d7c52ea45, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

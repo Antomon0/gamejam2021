@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     Image nextRoundPanel;
     Image endGamePanel;
 
+    bool gameEnded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour
         {
             updateTimerText();
         }
-        else
+        else if (!gameEnded)
         {
             endGame();
         }
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     private void endGame()
     {
+        gameEnded = true;
         StartCoroutine(endGameRoutine());
     }
 
@@ -131,7 +134,7 @@ public class GameManager : MonoBehaviour
         endGamePanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(endGamePanel.GetComponent<Animation>().clip.length);
         yield return new WaitUntil(() => Input.anyKeyDown);
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        AsyncOperation promise = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
     }
 
     private IEnumerator nextRoundPanelRoutine()

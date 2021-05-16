@@ -33,6 +33,10 @@ public class PlayerMovementRB : MonoBehaviour
     public string[] voiceLines;
     public float maxTimeVoiceLine = 10f;
     public float minTimeVoiceLine = 2f;
+    public float laserTime = 2f;
+    float laserTimeLeft;
+    bool laserIsActive = false;
+    public GameObject laser;
     float timeUntilVoiceLine;
     bool canTilt = true;
     // Start is called before the first frame update
@@ -68,6 +72,7 @@ public class PlayerMovementRB : MonoBehaviour
         UpdatePlayerFrontAngle();
         PanelCheck();
         ManageVoiceLine();
+        LaserCheck();
     }
 
     // Update is called once per frame
@@ -111,6 +116,7 @@ public class PlayerMovementRB : MonoBehaviour
         int tagIndex = Random.Range(0, tagPrefabs.Length);
         Instantiate(tagPrefabs[tagIndex], hit.point + (hit.normal * 0.5f), hitRotation);
         audioManager.Play("Spray");
+        ActivateLaser();
     }
     void PanelCheck()
     {
@@ -139,6 +145,7 @@ public class PlayerMovementRB : MonoBehaviour
         {
             audioManager.Play("SprayObjectif");
             currentPanel.Tag();
+            ActivateLaser();
         }
         /// Prints ray in debug 
         Debug.DrawRay(ui.transform.position + sprayOffset, -transform.right * tagDistance, Color.red, 5);
@@ -208,5 +215,22 @@ public class PlayerMovementRB : MonoBehaviour
     void SetVoiceLineTimer()
     {
         timeUntilVoiceLine = Random.Range(minTimeVoiceLine, maxTimeVoiceLine);
+    }
+
+    void LaserCheck()
+    {
+        laserTimeLeft -= Time.deltaTime;
+        if (laserIsActive && laserTimeLeft < 0)
+        {
+            laserIsActive = false;
+            laser.SetActive(false);
+        }
+    }
+
+    void ActivateLaser()
+    {
+        laserIsActive = true;
+        laserTimeLeft = laserTime;
+        laser.SetActive(true);
     }
 }

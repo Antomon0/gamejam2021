@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 9086726514288525875}
   - component: {fileID: 8868503796341606892}
   - component: {fileID: 889789432873445988}
+  - component: {fileID: 310265161052690261}
   m_Layer: 8
   m_Name: TagTriggerBox
   m_TagString: Untagged
@@ -83,7 +84,7 @@ BoxCollider:
   m_GameObject: {fileID: 7652358558960790994}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 5, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
@@ -102,6 +103,19 @@ MonoBehaviour:
   panels:
   - {fileID: 1652735312855445131}
   - {fileID: 3361314144039363490}
+--- !u!135 &310265161052690261
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7652358558960790994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2685737693147336275
 PrefabInstance:
   m_ObjectHideFlags: 0

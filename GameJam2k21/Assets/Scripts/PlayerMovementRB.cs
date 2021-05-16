@@ -128,6 +128,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
         else if (getInteractionInput())
         {
+            GameObject.FindObjectOfType<AudioManager>().Play("SprayObjectif");
             currentPanel.Tag();
         }
         /// Prints ray in debug 

@@ -5667,6 +5667,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6963135142100780414, guid: 7d3ed75609eba9048bdac2153283bc36,
+        type: 3}
+      propertyPath: nbPanelsToTag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6963135142100780415, guid: 7d3ed75609eba9048bdac2153283bc36,
         type: 3}
       propertyPath: m_Name
@@ -10569,7 +10574,6 @@ Transform:
   - {fileID: 368426158}
   - {fileID: 943077496}
   - {fileID: 362862150}
-  - {fileID: 1494371110}
   - {fileID: 666027825}
   - {fileID: 871623715}
   - {fileID: 1432443846}

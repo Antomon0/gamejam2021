@@ -180,3 +180,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
+  - name: SpeedUp
+    clip: {fileID: 8300000, guid: b5629d566fabb5e45bc166769ba40a3e, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
+    source: {fileID: 0}

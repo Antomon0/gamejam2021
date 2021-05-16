@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
         endGameScore.text = string.Format("Vous avez défendu le français pendant {0} nuit{1}!", roundNumber, roundNumber > 1 ? "s" : "");
         yield return new WaitForSeconds(endGamePanel.GetComponent<Animation>().clip.length);
         yield return new WaitUntil(() => Input.anyKeyDown);
+        GameObject.FindObjectOfType<AudioManager>().Stop("Soundtrack");
         AsyncOperation promise = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
     }
 

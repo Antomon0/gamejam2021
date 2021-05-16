@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
             }
             updatePanels();
         }
+        GameObject.FindObjectOfType<AudioManager>().Play("Soundtrack");
     }
 
     // Update is called once per frame

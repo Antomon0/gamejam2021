@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 459028183843143588}
   - component: {fileID: 459028183843143589}
   m_Layer: 0
-  m_Name: PlayerTag
+  m_Name: TagDeDroite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 2
-  m_Material: {fileID: 2100000, guid: c3babdce8562751459752772cf101281, type: 2}
+  m_Material: {fileID: 2100000, guid: 3968d44dbf6d4f049a14a6fe7801a6a9, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 0.617
   m_StartAngleFade: 180

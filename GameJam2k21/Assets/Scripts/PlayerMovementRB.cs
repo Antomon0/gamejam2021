@@ -10,7 +10,8 @@ public class PlayerMovementRB : MonoBehaviour
     public float jumpForce = 10000;
     public float tagDistance = 2.5f;
     public float forwardTagDistance = 3.5f;
-    public GameObject tagPrefab;
+    [SerializeField]
+    GameObject[] tagPrefabs;
     public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
@@ -100,7 +101,8 @@ public class PlayerMovementRB : MonoBehaviour
     void spray(RaycastHit hit)
     {
         Quaternion hitRotation = Quaternion.LookRotation(-hit.normal);
-        Instantiate(tagPrefab, hit.point + (hit.normal * 0.5f), hitRotation);
+        int tagIndex = Random.Range(0, tagPrefabs.Length);
+        Instantiate(tagPrefabs[tagIndex], hit.point + (hit.normal * 0.5f), hitRotation);
         audioManager.Play("Spray");
     }
     void PanelCheck()

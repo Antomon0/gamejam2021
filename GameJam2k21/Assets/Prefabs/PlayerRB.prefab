@@ -306,6 +306,19 @@ MonoBehaviour:
   maxPlayerAngle: 45
   lvlSpeedMultiplier: 1
   lvlTurnMultiplier: 1
+  voiceLines:
+  - Line1
+  - Line2
+  - Line3
+  - Line4
+  - Line5
+  - Line6
+  - Line7
+  - Line8
+  - Line9
+  - Line10
+  maxTimeVoiceLine: 15
+  minTimeVoiceLine: 5
 --- !u!1 &6067176088574631344
 GameObject:
   m_ObjectHideFlags: 0

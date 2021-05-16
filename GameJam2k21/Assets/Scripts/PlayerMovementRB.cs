@@ -9,7 +9,9 @@ public class PlayerMovementRB : MonoBehaviour
     public float turnSpeed = 100f;
     public float jumpForce = 10000;
     public float tagDistance = 2.5f;
-    public GameObject tagPrefab;
+    public float forwardTagDistance = 3.5f;
+    [SerializeField]
+    GameObject[] tagPrefabs;
     public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
@@ -106,23 +108,29 @@ public class PlayerMovementRB : MonoBehaviour
     void spray(RaycastHit hit)
     {
         Quaternion hitRotation = Quaternion.LookRotation(-hit.normal);
-        Instantiate(tagPrefab, hit.point + (hit.normal * 0.5f), hitRotation);
+        int tagIndex = Random.Range(0, tagPrefabs.Length);
+        Instantiate(tagPrefabs[tagIndex], hit.point + (hit.normal * 0.5f), hitRotation);
         audioManager.Play("Spray");
     }
     void PanelCheck()
     {
         RaycastHit hitLeft;
         RaycastHit hitRight;
+        RaycastHit hitForward;
+        bool collisionForward = Physics.Raycast(transform.position + sprayOffset, transform.forward, out hitForward, forwardTagDistance);
         bool collisionLeft = Physics.Raycast(transform.position + sprayOffset, -transform.right, out hitLeft, tagDistance);
         bool collisionRight = Physics.Raycast(transform.position + sprayOffset, transform.right, out hitRight, tagDistance);
-
         if (currentPanel == null && getInteractionInput())
         {
-            if (collisionLeft)
+            if (collisionForward)
+            {
+                spray(hitForward);
+            }
+            else if (collisionLeft)
             {
                 spray(hitLeft);
             }
-            if (collisionRight)
+            else if (collisionRight)
             {
                 spray(hitRight);
             }

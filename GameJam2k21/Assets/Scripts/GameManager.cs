@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
     public int nbPanelsToTag = 3;
-    public float roundSeconds = 120;
+    float baseRoundSeconds = 120;
+    public float roundSeconds;
     int roundNumber = 0;
 
     Text timerText;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        roundSeconds = baseRoundSeconds;
         GameObject.FindObjectOfType<AudioManager>().Play("Soundtrack");
         // Get text objects of UI
         Text[] textPanels = FindObjectsOfType<Text>();
@@ -147,7 +149,8 @@ public class GameManager : MonoBehaviour
     {
         nbPanelTagged = 0;
         roundNumber++;
-        roundSeconds += 5;
+        baseRoundSeconds -= 10;
+        roundSeconds = baseRoundSeconds;
         updateRoundText();
         updateObjectiveText();
         updatePanels();

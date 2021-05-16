@@ -29,10 +29,16 @@ public class PlayerMovementRB : MonoBehaviour
     public float lvlSpeedMultiplier = 1f;
     public float lvlTurnMultiplier = 1f;
     AudioManager audioManager;
+
+    public string[] voiceLines;
+    public float maxTimeVoiceLine = 10f;
+    public float minTimeVoiceLine = 2f;
+    float timeUntilVoiceLine;
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
     {
+        SetVoiceLineTimer();
         RigidPlayerRb = GetComponentInChildren<Rigidbody>();
         DefaultDrag = RigidPlayerRb.drag;
         RigidPlayerRb.transform.parent = null;
@@ -61,6 +67,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
         UpdatePlayerFrontAngle();
         PanelCheck();
+        ManageVoiceLine();
     }
 
     // Update is called once per frame
@@ -181,5 +188,25 @@ public class PlayerMovementRB : MonoBehaviour
         }
         else
             this.canTilt = true;
+    }
+
+    void ManageVoiceLine()
+    {
+        timeUntilVoiceLine -= Time.deltaTime;
+        if (timeUntilVoiceLine < 0)
+        {
+            audioManager.Play(ChooseRandomVoiceLine());
+            SetVoiceLineTimer();
+        }
+    }
+    string ChooseRandomVoiceLine()
+    {
+        int voiceLineIndex = Random.Range(0, voiceLines.Length);
+        return voiceLines[voiceLineIndex];
+    }
+
+    void SetVoiceLineTimer()
+    {
+        timeUntilVoiceLine = Random.Range(minTimeVoiceLine, maxTimeVoiceLine);
     }
 }

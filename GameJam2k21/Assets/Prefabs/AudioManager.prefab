@@ -47,7 +47,7 @@ MonoBehaviour:
   sounds:
   - name: Soundtrack
     clip: {fileID: 8300000, guid: 6e612a24c59aba840a6bf74e21ffc810, type: 3}
-    volume: 0.497
+    volume: 0.12
     volumeVariance: 0
     pitch: 0.98
     pitchVariance: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SprayObjectif
     clip: {fileID: 8300000, guid: 6cf469a44536b594d95a2494ed8cacd8, type: 3}
-    volume: 0.497
+    volume: 0.2
     volumeVariance: 0
     pitch: 0.98
     pitchVariance: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Spray
     clip: {fileID: 8300000, guid: fe6a98017d5395c4f97b96138da3c431, type: 3}
-    volume: 0.497
+    volume: 0.2
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Menu
     clip: {fileID: 8300000, guid: 5aee4ebeaba07d34baa5fbc50fe0d38f, type: 3}
-    volume: 0.294
+    volume: 0.12
     volumeVariance: 0
     pitch: 0.98
     pitchVariance: 0

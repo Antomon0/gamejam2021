@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject.FindObjectOfType<AudioManager>().Play("Soundtrack");
         // Get text objects of UI
         Text[] textPanels = FindObjectsOfType<Text>();
         for (int i = 0; i < textPanels.Length; i++)

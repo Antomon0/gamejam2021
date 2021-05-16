@@ -9,6 +9,7 @@ public class PlayerMovementRB : MonoBehaviour
     public float turnSpeed = 100f;
     public float jumpForce = 10000;
     public float tagDistance = 2.5f;
+    public float forwardTagDistance = 3.5f;
     public GameObject tagPrefab;
     public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
@@ -106,16 +107,21 @@ public class PlayerMovementRB : MonoBehaviour
     {
         RaycastHit hitLeft;
         RaycastHit hitRight;
+        RaycastHit hitForward;
+        bool collisionForward = Physics.Raycast(transform.position + sprayOffset, transform.forward, out hitForward, forwardTagDistance);
         bool collisionLeft = Physics.Raycast(transform.position + sprayOffset, -transform.right, out hitLeft, tagDistance);
         bool collisionRight = Physics.Raycast(transform.position + sprayOffset, transform.right, out hitRight, tagDistance);
-
         if (currentPanel == null && getInteractionInput())
         {
-            if (collisionLeft)
+            if (collisionForward)
+            {
+                spray(hitForward);
+            }
+            else if (collisionLeft)
             {
                 spray(hitLeft);
             }
-            if (collisionRight)
+            else if (collisionRight)
             {
                 spray(hitRight);
             }

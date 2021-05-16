@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d999fe4e505bab47b078d67f1233704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixerGroup: {fileID: 0}
   sounds:
   - name: Soundtrack
     clip: {fileID: 8300000, guid: 9cfc62492d87a8441b4d5238bf8b9b78, type: 3}
@@ -83,7 +82,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Hover
     clip: {fileID: 8300000, guid: 5f18ee5f7f672a14dadc2418fd44dac6, type: 3}
-    volume: 0.18
+    volume: 0.02
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0

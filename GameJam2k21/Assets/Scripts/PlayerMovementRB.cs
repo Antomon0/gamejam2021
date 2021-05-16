@@ -10,7 +10,8 @@ public class PlayerMovementRB : MonoBehaviour
     public float jumpForce = 10000;
     public float tagDistance = 2.5f;
     public float forwardTagDistance = 3.5f;
-    public GameObject tagPrefab;
+    [SerializeField]
+    GameObject[] tagPrefabs;
     public float maxPlayerAngle = 30f;
     Rigidbody RigidPlayerRb;
 
@@ -28,10 +29,16 @@ public class PlayerMovementRB : MonoBehaviour
     public float lvlSpeedMultiplier = 1f;
     public float lvlTurnMultiplier = 1f;
     AudioManager audioManager;
+
+    public string[] voiceLines;
+    public float maxTimeVoiceLine = 10f;
+    public float minTimeVoiceLine = 2f;
+    float timeUntilVoiceLine;
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
     {
+        SetVoiceLineTimer();
         RigidPlayerRb = GetComponentInChildren<Rigidbody>();
         DefaultDrag = RigidPlayerRb.drag;
         RigidPlayerRb.transform.parent = null;
@@ -60,6 +67,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
         UpdatePlayerFrontAngle();
         PanelCheck();
+        ManageVoiceLine();
     }
 
     // Update is called once per frame
@@ -100,7 +108,8 @@ public class PlayerMovementRB : MonoBehaviour
     void spray(RaycastHit hit)
     {
         Quaternion hitRotation = Quaternion.LookRotation(-hit.normal);
-        Instantiate(tagPrefab, hit.point + (hit.normal * 0.5f), hitRotation);
+        int tagIndex = Random.Range(0, tagPrefabs.Length);
+        Instantiate(tagPrefabs[tagIndex], hit.point + (hit.normal * 0.5f), hitRotation);
         audioManager.Play("Spray");
     }
     void PanelCheck()
@@ -179,5 +188,25 @@ public class PlayerMovementRB : MonoBehaviour
         }
         else
             this.canTilt = true;
+    }
+
+    void ManageVoiceLine()
+    {
+        timeUntilVoiceLine -= Time.deltaTime;
+        if (timeUntilVoiceLine < 0)
+        {
+            audioManager.Play(ChooseRandomVoiceLine());
+            SetVoiceLineTimer();
+        }
+    }
+    string ChooseRandomVoiceLine()
+    {
+        int voiceLineIndex = Random.Range(0, voiceLines.Length);
+        return voiceLines[voiceLineIndex];
+    }
+
+    void SetVoiceLineTimer()
+    {
+        timeUntilVoiceLine = Random.Range(minTimeVoiceLine, maxTimeVoiceLine);
     }
 }

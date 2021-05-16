@@ -147,16 +147,16 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator nextRoundPanelRoutine()
     {
-        nbPanelTagged = 0;
-        roundNumber++;
-        baseRoundSeconds -= 10;
-        roundSeconds = baseRoundSeconds;
-        updateRoundText();
-        updateObjectiveText();
-        updatePanels();
         nextRoundPanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
+        updatePanels();
         nextRoundPanel.gameObject.SetActive(false);
+        nbPanelTagged = 0;
+        roundNumber++;
+        updateRoundText();
+        updateObjectiveText();
+        baseRoundSeconds -= 10;
+        roundSeconds = baseRoundSeconds;
     }
 
     private void updateRoundText()

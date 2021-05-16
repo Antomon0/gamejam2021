@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5246609930664914839}
   - component: {fileID: 5246609930664914836}
   - component: {fileID: 5246609930664914838}
+  - component: {fileID: 8146202264753846387}
   m_Layer: 8
   m_Name: TagTriggerBox
   m_TagString: Untagged
@@ -50,7 +51,7 @@ BoxCollider:
   m_GameObject: {fileID: 5246609930664914834}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 5, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38242c16a578dc443b368c83f6de6e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &8146202264753846387
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246609930664914834}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5246609931918473540
 GameObject:
   m_ObjectHideFlags: 0

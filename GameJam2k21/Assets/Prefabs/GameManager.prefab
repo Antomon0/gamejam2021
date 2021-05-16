@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be74c42c6789594b9f1b67160083b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelPrefabs:
+  - {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
+  - {fileID: 4740365501765510825, guid: 3f5feda707c12df4c9391ff74e2af9b2, type: 3}
+  - {fileID: 1406732959221531637, guid: 90a83fb6327347a4a800d5e10793a6f5, type: 3}
   NbOfPanelsToActivate: 3
   lvlSpeedMultiplier: 1.1
   lvlTurnMultiplier: 1

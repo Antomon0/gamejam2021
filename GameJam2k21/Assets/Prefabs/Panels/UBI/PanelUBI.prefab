@@ -114,6 +114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelCleanUBI
       objectReference: {fileID: 0}
+    - target: {fileID: 7515299993518034244, guid: 76a42a67b8396404c95baab5786da7f3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8933638337616281133, guid: 76a42a67b8396404c95baab5786da7f3,
         type: 3}
       propertyPath: m_RootOrder

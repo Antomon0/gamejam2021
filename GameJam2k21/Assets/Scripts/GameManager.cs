@@ -2,29 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public int NbOfPanelsToActivate = 5;
     public float lvlSpeedMultiplier = 1.10f;
     public float lvlTurnMultiplier = 1f;
     List<PanelBehaviour> panels = new List<PanelBehaviour>();
     int nbPanelTagged = 0;
-    float roundSeconds = 120;
-    int roundNumber = 0;
     public int nbPanelsToTag = 3;
+    public float roundSeconds = 120;
+    int roundNumber = 0;
 
-    Text[] textPanels;
     Text timerText;
     Text objectiveText;
     Text roundText;
     Image nextRoundPanel;
+    Image endGamePanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        textPanels = FindObjectsOfType<Text>();
+        // Get text objects of UI
+        Text[] textPanels = FindObjectsOfType<Text>();
         for (int i = 0; i < textPanels.Length; i++)
         {
             Text current = textPanels[i];
@@ -44,7 +45,23 @@ public class GameManager : MonoBehaviour
                 updateRoundText();
             }
         }
-        nextRoundPanel = FindObjectOfType<Image>(true);
+        // Get image objects of UI
+        Image[] images = FindObjectsOfType<Image>(true);
+        for (int i = 0; i < images.Length; i++)
+        {
+            Image current = images[i];
+            string imageName = current.name.ToLower();
+            if (imageName.Contains("next"))
+            {
+                nextRoundPanel = current;
+                nextRoundPanel.gameObject.SetActive(false);
+            }
+            if (imageName.Contains("end"))
+            {
+                endGamePanel = current;
+                endGamePanel.gameObject.SetActive(false);
+            }
+        }
 
         panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
         if (panels.Count != 0)
@@ -71,7 +88,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("big sadge");
+            endGame();
         }
     }
 
@@ -99,14 +116,27 @@ public class GameManager : MonoBehaviour
         updateRoundText();
         updateObjectiveText();
         updatePanels();
-        StartCoroutine(NextRoundPanelRoutine());
-        nextRoundPanel.gameObject.SetActive(true);
+        StartCoroutine(nextRoundPanelRoutine());
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
         // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
     }
 
-    private IEnumerator NextRoundPanelRoutine()
+    private void endGame()
     {
+        StartCoroutine(endGameRoutine());
+    }
+
+    private IEnumerator endGameRoutine()
+    {
+        endGamePanel.gameObject.SetActive(true);
+        yield return new WaitForSeconds(endGamePanel.GetComponent<Animation>().clip.length);
+        yield return new WaitUntil(() => Input.anyKeyDown);
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+
+    private IEnumerator nextRoundPanelRoutine()
+    {
+        nextRoundPanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
         nextRoundPanel.gameObject.SetActive(false);
     }

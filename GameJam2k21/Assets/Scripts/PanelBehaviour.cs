@@ -34,7 +34,6 @@ public class PanelBehaviour : MonoBehaviour
             isTagged = true;
             panels[0].SetActive(false);
             panels[1].SetActive(true);
-            //Deactivate();
             taggedEvent.Invoke(gameObject.name);
             GameObject.FindObjectOfType<PlayerMovementRB>().PanelZoneExit();
         }

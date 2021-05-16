@@ -317,8 +317,8 @@ MonoBehaviour:
   - Line8
   - Line9
   - Line10
-  maxTimeVoiceLine: 15
-  minTimeVoiceLine: 5
+  maxTimeVoiceLine: 25
+  minTimeVoiceLine: 15
   laserTime: 0.7
   laser: {fileID: 5871437102406615442}
 --- !u!1 &6067176088574631344

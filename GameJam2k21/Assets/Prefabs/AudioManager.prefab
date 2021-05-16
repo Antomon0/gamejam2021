@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d999fe4e505bab47b078d67f1233704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
   sounds:
   - name: Soundtrack
     clip: {fileID: 8300000, guid: 6e612a24c59aba840a6bf74e21ffc810, type: 3}
@@ -51,7 +52,7 @@ MonoBehaviour:
     pitch: 0.98
     pitchVariance: 0
     loop: 1
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: SprayObjectif
     clip: {fileID: 8300000, guid: 6cf469a44536b594d95a2494ed8cacd8, type: 3}
@@ -60,7 +61,7 @@ MonoBehaviour:
     pitch: 0.98
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Spray
     clip: {fileID: 8300000, guid: fe6a98017d5395c4f97b96138da3c431, type: 3}
@@ -69,7 +70,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Menu
     clip: {fileID: 8300000, guid: 5aee4ebeaba07d34baa5fbc50fe0d38f, type: 3}
@@ -78,7 +79,7 @@ MonoBehaviour:
     pitch: 0.98
     pitchVariance: 0
     loop: 1
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Hover
     clip: {fileID: 8300000, guid: 5f18ee5f7f672a14dadc2418fd44dac6, type: 3}
@@ -87,7 +88,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 1
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line1
     clip: {fileID: 8300000, guid: f20d205c68e91ba47a2dca6587ab04c0, type: 3}
@@ -96,7 +97,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line2
     clip: {fileID: 8300000, guid: 8789972ef59d02b40ac2584dfa7a04cf, type: 3}
@@ -105,7 +106,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line3
     clip: {fileID: 8300000, guid: 2c97f47653ce83841aca6ba8d9863af4, type: 3}
@@ -114,7 +115,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line4
     clip: {fileID: 8300000, guid: e1ef45a0de1ee3946926fd094a9b357f, type: 3}
@@ -123,7 +124,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line5
     clip: {fileID: 8300000, guid: 87f0620f144809e46b8df6ea52ba121f, type: 3}
@@ -132,7 +133,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line6
     clip: {fileID: 8300000, guid: f6762e51bbee64c489c64b040fe84635, type: 3}
@@ -141,7 +142,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line7
     clip: {fileID: 8300000, guid: e5b2b72ccec787341a86440f72df45bb, type: 3}
@@ -150,7 +151,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line8
     clip: {fileID: 8300000, guid: 586564eb9f9589c40af7cb8e737ebf46, type: 3}
@@ -159,7 +160,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line9
     clip: {fileID: 8300000, guid: 925ad2e97a7bcce41ad4b084e15f79c8, type: 3}
@@ -168,7 +169,7 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}
   - name: Line10
     clip: {fileID: 8300000, guid: 78f54905f6cf2774685dc877054cfccc, type: 3}
@@ -177,5 +178,5 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: 24300002, guid: 1f9460bc54b5cb14895a809f25c815c4, type: 2}
     source: {fileID: 0}

@@ -67,8 +67,26 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fe6a98017d5395c4f97b96138da3c431, type: 3}
     volume: 0.497
     volumeVariance: 0
-    pitch: 0.98
+    pitch: 1
     pitchVariance: 0
     loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Menu
+    clip: {fileID: 8300000, guid: 07f4edd932637934ca7a22cd0af5676c, type: 3}
+    volume: 0.294
+    volumeVariance: 0
+    pitch: 0.98
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Hover
+    clip: {fileID: 8300000, guid: 5f18ee5f7f672a14dadc2418fd44dac6, type: 3}
+    volume: 0.18
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
     mixerGroup: {fileID: 0}
     source: {fileID: 0}

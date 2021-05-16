@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMovementRB : MonoBehaviour
 {
+    const float BASE_HOVER_PITCH = 1f;
     public float turnMidAirMultiplier = 0.5f;
     public float speed = 1500f;
     public float maxSpeed = 800f;
@@ -23,7 +24,7 @@ public class PlayerMovementRB : MonoBehaviour
 
     public float lvlSpeedMultiplier = 1f;
     public float lvlTurnMultiplier = 1f;
-
+    AudioManager audioManager;
     bool canTilt = true;
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,8 @@ public class PlayerMovementRB : MonoBehaviour
         DefaultDrag = RigidPlayerRb.drag;
         RigidPlayerRb.transform.parent = null;
         ui = GameObject.FindGameObjectWithTag("UI");
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
+        audioManager.Play("Hover");
     }
 
     void Update()
@@ -96,14 +99,13 @@ public class PlayerMovementRB : MonoBehaviour
         if (Input.GetKeyDown("e"))
         {
             Vector3 between = Vector3.Normalize(hit.point - transform.position);
-            print(between);
             Quaternion hitRotation = Quaternion.FromToRotation(Vector3.back, hit.normal);
             if (hitRotation.x != 0)
             {
                 hitRotation = Quaternion.Euler(0, -180, 0);
             }
             Instantiate(tagPrefab, new Vector3(hit.point.x - between.x / 100, hit.point.y - between.y / 100, hit.point.z - between.z / 100), hitRotation);
-            GameObject.FindObjectOfType<AudioManager>().Play("Spray");
+            audioManager.Play("Spray");
         }
     }
     void PanelCheck()
@@ -128,7 +130,7 @@ public class PlayerMovementRB : MonoBehaviour
         }
         else if (getInteractionInput())
         {
-            GameObject.FindObjectOfType<AudioManager>().Play("SprayObjectif");
+            audioManager.Play("SprayObjectif");
             currentPanel.Tag();
         }
         /// Prints ray in debug 
@@ -145,9 +147,14 @@ public class PlayerMovementRB : MonoBehaviour
             ui.transform.RotateAround(ui.transform.position + Vector3.down * 0.75f, transform.right, newAngle - currentInclination);
             ui.transform.localPosition = new Vector3(ui.transform.localPosition.x, 0, ui.transform.localPosition.z);
             currentInclination = newAngle;
+            UpdateHoverSound(forwardMvt);
         }
     }
 
+    void UpdateHoverSound(float playerInput)
+    {
+        audioManager.ChangeSoundParam("Hover", "pitch", Mathf.Abs(playerInput) * 1f + BASE_HOVER_PITCH);
+    }
     public void PanelZoneEntered(PanelBehaviour panel)
     {
         currentPanel = panel;

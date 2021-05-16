@@ -1716,7 +1716,7 @@ PrefabInstance:
     - target: {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
@@ -3924,6 +3924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelAW (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
 --- !u!4 &371673184 stripped
@@ -4821,7 +4826,7 @@ PrefabInstance:
     - target: {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
@@ -10910,6 +10915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelAW
       objectReference: {fileID: 0}
+    - target: {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
 --- !u!1001 &1255564239
@@ -13367,7 +13377,7 @@ PrefabInstance:
     - target: {fileID: 4509546873436297396, guid: d20dfabd560c60649a8fb9b467678584,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20dfabd560c60649a8fb9b467678584, type: 3}
@@ -18447,6 +18457,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 81026743838772844, guid: b37eb1cedcc6f7f418beb0b9de00d36f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00048828125
+      objectReference: {fileID: 0}
     - target: {fileID: 462391456502648730, guid: b37eb1cedcc6f7f418beb0b9de00d36f,
         type: 3}
       propertyPath: m_Enabled

@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
             if (imageName.Contains("next"))
             {
                 nextRoundPanel = current;
+                Debug.Log(nextRoundPanel);
                 nextRoundPanel.gameObject.SetActive(false);
             }
             if (imageName.Contains("end"))
@@ -121,12 +122,6 @@ public class GameManager : MonoBehaviour
 
     private void nextRound()
     {
-        nbPanelTagged = 0;
-        roundNumber++;
-        roundSeconds += 5;
-        updateRoundText();
-        updateObjectiveText();
-        updatePanels();
         StartCoroutine(nextRoundPanelRoutine());
         GameObject.FindObjectOfType<PlayerMovementRB>().lvlSpeedMultiplier *= lvlSpeedMultiplier;
         // GameObject.FindObjectOfType<PlayerMovementRB>().lvlTurnMultiplier *= lvlTurnMultiplier;
@@ -149,6 +144,12 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator nextRoundPanelRoutine()
     {
+        nbPanelTagged = 0;
+        roundNumber++;
+        roundSeconds += 5;
+        updateRoundText();
+        updateObjectiveText();
+        updatePanels();
         nextRoundPanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
         nextRoundPanel.gameObject.SetActive(false);
@@ -176,6 +177,7 @@ public class GameManager : MonoBehaviour
 
     private void updatePanels()
     {
+        updatePanelsBehaviourList();
         resetPanels();
         List<int> panelsToActivate = new List<int>();
         for (int i = 0; i < NbOfPanelsToActivate; i++)
@@ -196,7 +198,6 @@ public class GameManager : MonoBehaviour
             newPanelBehaviour.addListener(TriggerPanel);
             newPanelBehaviour.Activate();
         });
-        updatePanelsBehaviourList();
     }
 
     private int getPanelIndex(List<int> usedIndexes)

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UI
   - Panel
+  - EndScore
   layers:
   - Default
   - TransparentFX

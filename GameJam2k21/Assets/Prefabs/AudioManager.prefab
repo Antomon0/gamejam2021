@@ -89,3 +89,93 @@ MonoBehaviour:
     loop: 1
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: Line1
+    clip: {fileID: 8300000, guid: f20d205c68e91ba47a2dca6587ab04c0, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line2
+    clip: {fileID: 8300000, guid: 8789972ef59d02b40ac2584dfa7a04cf, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line3
+    clip: {fileID: 8300000, guid: 2c97f47653ce83841aca6ba8d9863af4, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line4
+    clip: {fileID: 8300000, guid: e1ef45a0de1ee3946926fd094a9b357f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line5
+    clip: {fileID: 8300000, guid: 87f0620f144809e46b8df6ea52ba121f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line6
+    clip: {fileID: 8300000, guid: f6762e51bbee64c489c64b040fe84635, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line7
+    clip: {fileID: 8300000, guid: e5b2b72ccec787341a86440f72df45bb, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line8
+    clip: {fileID: 8300000, guid: 586564eb9f9589c40af7cb8e737ebf46, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line9
+    clip: {fileID: 8300000, guid: 925ad2e97a7bcce41ad4b084e15f79c8, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Line10
+    clip: {fileID: 8300000, guid: 78f54905f6cf2774685dc877054cfccc, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

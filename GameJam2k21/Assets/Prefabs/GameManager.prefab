@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 1406732959221531637, guid: 90a83fb6327347a4a800d5e10793a6f5, type: 3}
   - {fileID: 8983424718792278968, guid: 5489985f6ec49c64e832db099d7f17d5, type: 3}
   - {fileID: 3337632850457118711, guid: 3227c07bada1dc74aa0d51e48a24b276, type: 3}
+  - {fileID: 6249683579594072327, guid: 39a42b3606819da458be93d1afbcc8dc, type: 3}
   NbOfPanelsToActivate: 3
   lvlSpeedMultiplier: 1.1
   lvlTurnMultiplier: 1

@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     private void updateObjectiveText()
     {
-        objectiveText.text = string.Format("{0}/{1}", nbPanelTagged, nbPanelsToTag);
+        objectiveText.text = string.Format("{0} sur {1}", nbPanelTagged, nbPanelsToTag);
     }
 
     private void updateTimerText()

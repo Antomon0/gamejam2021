@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
 
     private void updatePanelsBehaviourList()
     {
-        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
+        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>(true));
     }
 
     private void resetPanels()

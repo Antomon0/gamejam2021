@@ -176,7 +176,10 @@ public class GameManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(roundSeconds / 60);
         if (roundSeconds >= 0)
         {
-            timerText.text = string.Format("{0}:{1}", minutes, Mathf.RoundToInt(roundSeconds - (minutes * 60)));
+            int seconds = Mathf.RoundToInt(roundSeconds - (minutes * 60));
+            timerText.text = string.Format("{0}:{1}",
+            minutes,
+            seconds < 10 ? "0" + seconds.ToString() : seconds.ToString());
         }
     }
 

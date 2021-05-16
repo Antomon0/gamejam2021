@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator nextRoundPanelRoutine()
     {
         nextRoundPanel.gameObject.SetActive(true);
+        GameObject.FindObjectOfType<AudioManager>().Play("SpeedUp");
         yield return new WaitForSeconds(nextRoundPanel.GetComponent<Animation>().clip.length);
         updatePanels();
         nextRoundPanel.gameObject.SetActive(false);

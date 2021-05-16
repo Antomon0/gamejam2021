@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
         }
         panelsToActivate.ForEach((index) =>
         {
-            int panelType = Random.Range(0, 3);
+            int panelType = Random.Range(0, panelPrefabs.Length);
             GameObject currentPanel = panels[index].transform.parent.gameObject;
             GameObject newPanel = Instantiate(panelPrefabs[panelType], currentPanel.transform.position, currentPanel.transform.rotation);
             newPanel.transform.parent = currentPanel.transform.parent;
@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
 
     private void updatePanelsBehaviourList()
     {
-        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>(true));
+        panels = new List<PanelBehaviour>(FindObjectsOfType<PanelBehaviour>());
     }
 
     private void resetPanels()

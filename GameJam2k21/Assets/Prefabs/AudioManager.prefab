@@ -54,8 +54,17 @@ MonoBehaviour:
     loop: 1
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: SprayObjectif
+    clip: {fileID: 8300000, guid: 6cf469a44536b594d95a2494ed8cacd8, type: 3}
+    volume: 0.497
+    volumeVariance: 0
+    pitch: 0.98
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
   - name: Spray
-    clip: {fileID: 8300000, guid: 5480ca7033fa88441a82e3e5e4b20f36, type: 3}
+    clip: {fileID: 8300000, guid: fe6a98017d5395c4f97b96138da3c431, type: 3}
     volume: 0.497
     volumeVariance: 0
     pitch: 0.98

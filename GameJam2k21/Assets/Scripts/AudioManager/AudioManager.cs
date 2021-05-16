@@ -9,8 +9,6 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-    public AudioMixerGroup mixerGroup;
-
     public Sound[] sounds;
 
     List<SoundChange> changes = new List<SoundChange>();
@@ -33,8 +31,6 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.clip = s.clip;
             s.source.loop = s.loop;
-
-            s.source.outputAudioMixerGroup = mixerGroup;
         }
     }
 

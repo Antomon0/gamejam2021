@@ -6,6 +6,8 @@ public class PanelBehaviour : MonoBehaviour
 {
     bool isTagged = false;
     [SerializeField]
+    // 0 : clearPanel
+    // 1 : taggedPanel
     GameObject[] panels;
     public class PanelEvent : UnityEvent<string>
     {

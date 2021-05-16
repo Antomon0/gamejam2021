@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3704475653232891913
 Transform:
   m_ObjectHideFlags: 0
@@ -319,6 +319,8 @@ MonoBehaviour:
   - Line10
   maxTimeVoiceLine: 15
   minTimeVoiceLine: 5
+  laserTime: 0.7
+  laser: {fileID: 5871437102406615442}
 --- !u!1 &6067176088574631344
 GameObject:
   m_ObjectHideFlags: 0
